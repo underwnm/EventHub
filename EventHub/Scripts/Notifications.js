@@ -2,11 +2,11 @@
 var notifications = [];
 var eventsPerPage = 12;
 
-function checkNotifications() {
-    getFollowings();
+function checkNotifications(isNotificationPage) {
+    getFollowings(isNotificationPage);
 }
 
-function getFollowings() {
+function getFollowings(isNotificationPage) {
     $.ajax({
         type: "GET",
         url: "/api/followings"
@@ -18,8 +18,11 @@ function getFollowings() {
                     followings.push(event);
                 });
             getNotifications();
-            if (notifications.length > 0) {
+            if (notifications.length > 0 && !isNotificationPage) {
                 displayNotificationIcon();
+            }
+            if (isNotificationPage) {
+                displayNotifications();
             }
         })
         .fail(function () {
@@ -45,6 +48,14 @@ function getDateTime(date) {
 function displayNotificationIcon() {
     $('#notification-alert').show();
 }
+function displayNotifications() {
+    var notificationContainer = $('#notification-list');
+    notificationContainer.empty();
+    $.each(notifications, function (index, event) {
+        var html = buildHTML(event, index);
+        notificationContainer.append(html);
+    });
+}
 
 function createPagination() {
     const pagesNeeded = notifications.length / eventsPerPage;
@@ -57,6 +68,26 @@ function createPagination() {
             $(newPage).appendTo(paginationList);
         }
     }
+}
+
+function buildHTML(event, index) {
+    var html = `<li id="${index}" class="notify-result" style="opacity: 1;">
+                    <div class="notify-layout">
+                    <span><img class="notify-image" src="${event.imageUrl}"></span>
+
+                    <div class="notify-information">
+                        <span class="notify-title">${event.eventTitle}</span><br>
+                        <span class="notify-start-time">${event.startTime}</span><br>
+                        <span class ="notify-venue-name">${event.venueName}</span><br>
+                        <span class ="notify-venue-address">${event.venueAddress}</span><br>
+                        <span class ="notify-city-name">${event.cityName}</span>
+                        <span class ="notify-region-name">${event.regionName}</span>
+                        <span class ="notify-region-abbr">${event.regionAbbreviation}</span>
+                        <span class ="notify-id">${event.eventId}</span>
+                    </div>
+                    </div>
+                </li>`
+    return html;
 }
 
 $(document)
