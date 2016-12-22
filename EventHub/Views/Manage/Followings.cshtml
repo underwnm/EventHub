@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Followings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron text-center">
+    <h1>My Followings</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row fluid">
+        <ul id="event-container">
+            <li>Checkings for events you are following</li>
+        </ul>
+    </div>
+</div>
+<div id="pagination-nav" class="text-center">
+    <div class="container-fluid text-center">
+        <ul class="pagination"></ul>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/EventsFollowed.js"></script>
+    <script>
+        getFollowings();
+    </script>
+}

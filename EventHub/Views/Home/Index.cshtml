@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron text-center">
+    <h1>Top Events</h1>
+</div>
+
+<input id="authentication" data-user-login="@User.Identity.IsAuthenticated"/>
+<div class="container-fluid">
+    <div class="row fluid">
+        <div class="span12">
+            <div class="input-group">
+                <input id="search-keyword" class="form-control" type="text" placeholder="Keyword"/>
+                <input id="search-location" class="form-control" type="text" placeholder="Location"/>
+                <span class="input-group-btn"><button id="search-button" class="form-control btn btn-default" type="button">Search</button></span>
+            </div>
+            <ul id="event-container">
+                <li>Loading top events from eventful</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="pagination-nav" class="text-center">
+    <div class="container-fluid text-center">
+        <ul class="pagination"></ul>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Search.js"></script>
+    <script>
+        getFollowings();
+        getTopEvents();
+    </script>
+}

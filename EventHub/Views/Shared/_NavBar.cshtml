@@ -1,0 +1,14 @@
+﻿<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink("EventHub", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="pull-right">
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+    <div id="login-alert" class="text-center fade in login-alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Warning!</strong> You must <a href="/Account/Login" class="alert-link">login</a> to your account to follow events.
+    </div>
+</div>
