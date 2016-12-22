@@ -2,11 +2,7 @@
 var notifications = [];
 var eventsPerPage = 12;
 
-function checkNotifications(isNotificationPage) {
-    getFollowings(isNotificationPage);
-}
-
-function getFollowings(isNotificationPage) {
+function checkFollowings() {
     $.ajax({
         type: "GET",
         url: "/api/followings"
@@ -18,12 +14,7 @@ function getFollowings(isNotificationPage) {
                     followings.push(event);
                 });
             getNotifications();
-            if (notifications.length > 0 && !isNotificationPage) {
-                displayNotificationIcon();
-            }
-            if (isNotificationPage) {
-                displayNotifications();
-            }
+            displayNotifications();
         })
         .fail(function () {
             console.log("FAIL");
@@ -45,9 +36,6 @@ function getDateTime(date) {
     return new Date(date[0]);
 }
 
-function displayNotificationIcon() {
-    $('#notification-alert').show();
-}
 function displayNotifications() {
     var notificationContainer = $('#notification-list');
     notificationContainer.empty();
@@ -86,7 +74,7 @@ function buildHTML(event, index) {
                         <span class ="notify-id">${event.eventId}</span>
                     </div>
                     </div>
-                </li>`
+                </li>`;
     return html;
 }
 
