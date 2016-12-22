@@ -156,6 +156,13 @@ a:hover { color: darkgrey; }
     display: none;
 }
 
+.notification-alert {
+    background-color: #00bc8c;
+    padding: 20px;
+    font-size: 1.25em;
+    display: none;
+}
+
 #authentication {
     display: none;
 }
