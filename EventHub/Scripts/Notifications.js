@@ -70,23 +70,42 @@ function createPagination() {
     }
 }
 
-function buildHTML(event, index) {
+function buildHTML(event, index, weather) {
+    let map = getMap(event.venueAddress, event.cityName, event.regionName)
     var html = `<li id="${index}" class="notify-result" style="opacity: 1;">
-                    <div class="notify-layout">
-                    <span><img class="notify-image" src="${event.imageUrl}"></span>
+                    <div class="notify-layout row">
+                        <div class="col-sm-3">
+                            <span><img class="notify-image" src="${event.imageUrl}"></span>
+                            <h3 class ="notify-title text-center">${event.eventTitle}</h3><br>
+                        </div>
+                        <div class ="notify-information col-sm-3">
+                            When:<br>
+                            <span class ="notify-start-time">${event.startTime}</span><br><br>
+                            Where:<br>
+                            <span class ="notify-venue-name">${event.venueName}</span><br>
+                            <span class ="notify-venue-address">${event.venueAddress}</span><br>
+                            <span class ="notify-city-name">${event.cityName}, </span>
+                            <span class ="notify-region-name">${event.regionName}</span>
+                            <span class ="notify-region-abbr">${event.regionAbbreviation}</span>
+                            <span class ="notify-id">${event.eventId}</span><br><br>
+                            Predicted weather:
+                            <span class ="notify-weather">${weather}</span>
+                            <div class ="weather-img">
+                            <img src="${weather}"/>
+                            </div>
+                        </div>
+                        <div class ="col-sm-5 notify-map">
+                            ${map}
+                        </div>
+                    </div>
+                </li>`;
+    return html;
+}
 
-                    <div class="notify-information">
-                        <span class="notify-title">${event.eventTitle}</span><br>
-                        <span class="notify-start-time">${event.startTime}</span><br>
-                        <span class ="notify-venue-name">${event.venueName}</span><br>
-                        <span class ="notify-venue-address">${event.venueAddress}</span><br>
-                        <span class ="notify-city-name">${event.cityName}</span>
-                        <span class ="notify-region-name">${event.regionName}</span>
-                        <span class ="notify-region-abbr">${event.regionAbbreviation}</span>
-                        <span class ="notify-id">${event.eventId}</span>
-                    </div>
-                    </div>
-                </li>`
+function getMap(address, city, region) {
+    let parameters = `${address}, ${city}+${region}`;
+    let apiCall = "https://www.google.com/maps/embed/v1/place?key=AIzaSyB9hagirRLcYPotf0iB9fYjqQMdkFD_yWQ&q=" + parameters;
+    let html = `<iframe class="iframe-google" width="100%" height="100%" align="middle" frameborder="0" style="border:0" src="${apiCall}" allowfullscreen></iframe>`;
     return html;
 }
 

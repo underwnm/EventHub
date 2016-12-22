@@ -212,3 +212,14 @@ a:hover { color: darkgrey; }
     margin: 0 auto;
     pointer-events: all;
 }
+.notify-title{
+    margin-top: 3px;
+}
+.notify-image{
+    max-width: 100%;
+}
+.notify-id{ display: none; }
+.notify-region-name { display: none; }
+.notify-map{
+    height: 150%;
+}
