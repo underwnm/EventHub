@@ -25,6 +25,10 @@ textarea { max-width: 280px; }
 
 /* Bootstrap Override */
 
+.jumbotron {
+    margin-top: 5%
+}
+
 .input-group {
     display: inline-block !important;
     margin: 20px 0 20px;
@@ -32,12 +36,21 @@ textarea { max-width: 280px; }
     padding-right: 20%;
 }
 
+.form-control {
+    width: 100% !important;    
+}
+
 footer { text-align: right; }
 
 li { list-style-type: none; }
 
+.btn {
+    border-width: 0;
+}
 .btn-default {
     background-color: #375a7f;
+}
+#search-button {
     -ms-border-radius: 4px !important;
     border-radius: 4px !important;
     -ms-border-bottom-left-radius: 0 !important;
@@ -92,7 +105,7 @@ a:hover { color: darkgrey; }
 
 /* Screen Size Overrides */
 
-@media (max-width: 800px) {
+@media (max-width: 1250px) {
     .input-group {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -101,6 +114,8 @@ a:hover { color: darkgrey; }
 
 @media (max-width: 767px) {
     .navbar-nav .open .dropdown-menu { text-align: right; }
+    .jumbotron { margin-top: 20% }
+    .navbar-right { float: left !important}
 }
 
 /* Page Level */
@@ -168,9 +183,32 @@ a:hover { color: darkgrey; }
 }
 
 .follow-btn {
-    width: 50%
+    width: 49%;
+    margin-top: 1px;
 }
 
 .directions-btn {
-    width: 50%
+    width: 50%;
+    margin-top: 1px;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
 }

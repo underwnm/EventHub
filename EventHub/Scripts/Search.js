@@ -166,7 +166,7 @@ function buildHtml(index,
                     <span><img class ="imageUrl" src="${imageUrl}"></span>\n
                     <div class ="event-information">
                         ${followbtn}
-                        <button class="directions-btn btn btn-default" type="button">Directions</button><br />
+                        <button type="button" class ="btn btn-default directions-btn modalButton" data-toggle="modal" data-target="#myModal">Google maps</button><br />
                         <span class ="event-title">${eventTitle}</span><br />
                         <span class ="start-time">${startTime}</span><br />
                         <span class ="venue-name">${venueName}</span><br />
@@ -301,16 +301,15 @@ function checkAlreadyFollowing(eventId) {
 }
 
 function getDirections(button) {
+    $("#directions").empty();
     let directionsDto = buildFollowDto(button);
-    let html = `<iframe
-                  width="600"
-                  height="450"
-                  frameborder="0" style="border:0"
-                  src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY
-                    &q=Space+Needle,Seattle+WA" allowfullscreen>
-                </iframe>`;
-    const googleApi =
-        "https://maps.googleapis.com/maps/api/directions/json?&destination=Montreal&key=AIzaSyDA-xpAbKr2GeEZpAqOXkVk5CYkFYuHt0k";
+    let address = directionsDto.venueAddress.replace(" ","+");
+    let city = directionsDto.cityName;
+    let region = directionsDto.regionName;
+    let parameters = `${address}, ${city}+${region}`;
+    let apiCall = "https://www.google.com/maps/embed/v1/place?key=AIzaSyB9hagirRLcYPotf0iB9fYjqQMdkFD_yWQ&q=" + parameters;
+    let html = `<iframe class="iframe-google" width="600" height="450" align="middle" frameborder="0" style="border:0" src="${apiCall}" allowfullscreen></iframe>`;
+    $("#directions").append(html);
 }
 
 $(document)
