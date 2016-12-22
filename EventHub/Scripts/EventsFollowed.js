@@ -25,9 +25,11 @@ function createPagination() {
     const paginationList = $('.pagination')[0];
     $(paginationList).empty();
     console.log(pagesNeeded);
-    for (let i = 0; i < pagesNeeded; i++) {
-        const newPage = `<li><span class="pagination-btn" page="${i}">${i + 1}</span></li>`;
-        $(newPage).appendTo(paginationList);
+    if (pagesNeeded > 1) {
+        for (let i = 0; i < pagesNeeded; i++) {
+            const newPage = `<li><span class="pagination-btn" page="${i}">${i + 1}</span></li>`;
+            $(newPage).appendTo(paginationList);
+        }
     }
 }
 
