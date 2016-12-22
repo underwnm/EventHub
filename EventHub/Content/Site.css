@@ -223,3 +223,6 @@ a:hover { color: darkgrey; }
 .notify-map{
     height: 150%;
 }
+.notify-layout{
+    margin-bottom: 10px;
+}

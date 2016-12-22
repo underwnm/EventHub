@@ -40,8 +40,7 @@ function displayNotifications() {
     var notificationContainer = $('#notification-list');
     notificationContainer.empty();
     $.each(notifications, function (index, event) {
-        var html = buildHTML(event, index);
-        notificationContainer.append(html);
+        var html = getweather(event, index);
     });
 }
 
@@ -60,6 +59,19 @@ function createPagination() {
 
 function buildHTML(event, index, weather) {
     let map = getMap(event.venueAddress, event.cityName, event.regionName)
+    let weatherHtml;
+    console.log(weather);
+    if (weather === 'noweather') {
+        weatherHtml = `Predicted weather:<br>
+            <span class ="notify-weather">Predicted weather<br> could not be found</span>`
+    }
+    else {
+        weather = weather.forecast.simpleforecast.forecastday[0];
+        weatherHtml = `Predicted weather:<br>
+            <div class ="weather-img">
+            <span class ="notify-weather">${weather.high.fahrenheit}°F</span>
+            <img src="${weather.icon_url}"/>`;
+    }
     var html = `<li id="${index}" class="notify-result" style="opacity: 1;">
                     <div class="notify-layout row">
                         <div class="col-sm-3">
@@ -76,10 +88,7 @@ function buildHTML(event, index, weather) {
                             <span class ="notify-region-name">${event.regionName}</span>
                             <span class ="notify-region-abbr">${event.regionAbbreviation}</span>
                             <span class ="notify-id">${event.eventId}</span><br><br>
-                            Predicted weather:
-                            <span class ="notify-weather">${weather}</span>
-                            <div class ="weather-img">
-                            <img src="${weather}"/>
+                            ${weatherHtml}
                             </div>
                         </div>
                         <div class ="col-sm-5 notify-map">
@@ -109,3 +118,29 @@ $(document)
                     displayPage(pageNumber);
                 });
     });
+
+function getweather(event, index) {
+    console.log(event.cityName, event.regionAbbreviation);
+    let data;
+    $.ajax({
+        url: `http://api.wunderground.com/api/c14e53931211628a/forecast10day/q/${event.regionAbbreviation}/${event.cityName}.json`,
+        dataType: "jsonp",
+        async: true,
+        success: function (data) {
+            console.log(data);
+            if (data.forecast !== undefined) {
+                var notificationContainer = $('#notification-list');
+                html = buildHTML(event, index, data)
+                notificationContainer.append(html);
+            }
+            else {
+                var notificationContainer = $('#notification-list');
+                html = buildHTML(event, index, 'noweather')
+                notificationContainer.append(html);
+            }
+        },
+        fail: function() {
+            console.log("fail");
+        }
+    });
+}
