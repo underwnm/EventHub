@@ -101,12 +101,4 @@ $(document)
                     const pageNumber = $(this).attr("page");
                     displayPage(pageNumber);
                 });
-
-        $(document)
-            .on("click",
-                ".follow-btn",
-                function (e) {
-                    const button = $(e.target);
-                    follow(buildFollowDto(button), button);
-                });
     });
