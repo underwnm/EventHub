@@ -302,15 +302,18 @@ function checkAlreadyFollowing(eventId) {
 
 function getDirections(button) {
     let directionsDto = buildFollowDto(button);
+    let address = directionsDto.venueAddress.replace(" ","+");
+    let city = directionsDto.cityName;
+    let region = directionsDto.regionAbbreviation;
+    let parameters = `${address}, ${city}+${region}`;
+    let apiCall = "https://www.google.com/maps/embed/v1/place?key=AIzaSyB9hagirRLcYPotf0iB9fYjqQMdkFD_yWQ&q=" + parameters;
     let html = `<iframe
                   width="600"
                   height="450"
                   frameborder="0" style="border:0"
-                  src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY
-                    &q=Space+Needle,Seattle+WA" allowfullscreen>
+                  src="${apiCall}" allowfullscreen>
                 </iframe>`;
-    const googleApi =
-        "https://maps.googleapis.com/maps/api/directions/json?&destination=Montreal&key=AIzaSyDA-xpAbKr2GeEZpAqOXkVk5CYkFYuHt0k";
+    $("#event-container").append(html);
 }
 
 $(document)
